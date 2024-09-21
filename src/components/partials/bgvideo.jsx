@@ -4,7 +4,7 @@ function Bgvideo({videoRef}) {
 
 
   return (
-    <div className='w-full absolute h-full left-0 z-0'>
+    <div className='w-full absolute h-[115vh] left-0 z-0'>
       <video
         ref={videoRef}
         className='w-full h-full object-cover'
