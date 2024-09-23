@@ -1,11 +1,15 @@
 import React from "react";
 import { FaLocationArrow } from "react-icons/fa6";
+import Cards from "../partials/Cards";
 function Page1() {
   return (
     <div className="w-full h-[100vh]  px-3 py-2 flex flex-col items-center justify-center relative z-10">
       <div className=" mt-20 ">
         <h1 className="text-[8em] sm:text-[10em] md:text-[11em] md:-top-[10px] md:left-10 text-gray-100 absolute  leading-[0.9] font1 font-black tracking-wide">
           REDEFINE
+        </h1>
+        <h1 className="text-[8em] sm:text-[10em] text-gray-100 md:text-[11em] absolute md:bottom-32 md:right-0 leading-[0.9] font1 font-black ml-40 tracking-wide">
+          GAMING
         </h1>
         <div className="page1-end flex flex-col justify-between  gap-1 md:w-full mt-2">
        <div className="absolute top-44 left-10">
@@ -22,9 +26,6 @@ function Page1() {
         </div>
        </div>
       </div>
-        <h1 className="text-[8em] sm:text-[10em] text-gray-100 md:text-[11em] absolute md:bottom-32 md:right-0 leading-[0.9] font1 font-black ml-40 tracking-wide">
-          GAMING
-        </h1>
       </div>
       <div className="page1-end flex items-center justify-between md:hidden gap-12 md:w-full mt-20">
         <div className="page1-end-left">
@@ -38,6 +39,9 @@ function Page1() {
             Trailer
           </button>
         </div>
+      </div>
+      <div className="boxs-c">
+        <Cards/>
       </div>
     </div>
   );
