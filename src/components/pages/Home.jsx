@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser } from '../../redux/actions/userActions';
 import Navbar from '../partials/Navbar';
 import Page1 from './Page1';
-import Bgvideo from '../partials/Bgvideo';
+import Bgvideo from '../partials/bgvideo';
 import Page2 from './Page2';
 import { signOut } from '../../services/authService';
 

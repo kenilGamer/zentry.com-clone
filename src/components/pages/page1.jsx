@@ -1,37 +1,38 @@
 import React from "react";
 import { FaLocationArrow } from "react-icons/fa6";
 import Cards from "../partials/Cards";
+
 function Page1() {
   return (
-    <div className="w-full h-[100vh]  px-3 py-2 flex flex-col items-center justify-center relative z-10">
-      <div className=" mt-20 ">
-        <h1 className="text-[8em] sm:text-[10em] md:text-[11em] md:-top-[10px] md:left-10 text-gray-100 absolute  leading-[0.9] font1 font-black tracking-wide">
+    <div className="w-full h-[100vh] px-3 py-2 flex flex-col items-center justify-center relative z-10">
+      <div className="mt-20">
+        <h1 className="text-[8em] sm:text-[10em] md:text-[11em] md:-top-[10px] md:left-10 text-gray-100 absolute leading-[0.9] font1 font-black tracking-wide">
           REDEFINE
         </h1>
         <h1 className="text-[8em] sm:text-[10em] text-gray-100 md:text-[11em] absolute md:bottom-32 md:right-0 leading-[0.9] font1 font-black ml-40 tracking-wide">
           GAMING
         </h1>
-        <div className="page1-end flex flex-col justify-between  gap-1 md:w-full mt-2">
-       <div className="absolute top-44 left-10">
-       <div className="page1-end-left mb-6">
-          <p className="text-xl w-96 tracking-wide ">
-          Enter the Metagame Layer
-          Unleash the Play Economy
-          </p>
+        <div className="page1-end flex flex-col justify-between gap-1 md:w-full mt-2">
+          <div className="absolute top-44 left-10">
+            <div className="page1-end-left mb-6">
+              <p className="text-xl w-96 tracking-wide">
+                Enter the Metagame Layer
+                Unleash the Play Economy
+              </p>
+            </div>
+            <div className="page1-end-right">
+              <button className="rounded-full px-10 py-2 text-sm gap-2 text-black bg-[#e4e86f] hover:bg-yellow-200 flex items-center justify-center">
+                <FaLocationArrow /> WATCH Trailer
+              </button>
+            </div>
+          </div>
         </div>
-        <div className="page1-end-right">
-          <button className="rounded-full px-10 py-2 text-sm gap-2 text-black bg-[#e4e86f] hover:bg-yellow-200 flex items-center justify-center">
-           <FaLocationArrow/> WATCH Trailer
-          </button>
-        </div>
-       </div>
-      </div>
       </div>
       <div className="page1-end flex items-center justify-between md:hidden gap-12 md:w-full mt-20">
         <div className="page1-end-left">
           <p className="text-2xl w-96 tracking-wide">
-          Enter the Metagame Layer
-          Unleash the Play Economy
+            Enter the Metagame Layer
+            Unleash the Play Economy
           </p>
         </div>
         <div className="page1-end-right">
@@ -40,8 +41,8 @@ function Page1() {
           </button>
         </div>
       </div>
-      <div className="boxs-c">
-        <Cards/>
+      <div className="w-full h-full flex items-center justify-center absolute -top-20 z-[999999666] left-0">
+        <Cards  />
       </div>
     </div>
   );

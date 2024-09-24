@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import Cards from './Cards';
 
 function Bgvideo({videoRef}) {
 
@@ -16,7 +17,7 @@ function Bgvideo({videoRef}) {
         <source src="/imgs/9a1e8539-89e1-f918-9ba7-3c0289978d86_custom.mp4" type="video/mp4" />
       </video>
       <div className="overlay"></div>
-    
+     
     </div>
   );
 }
