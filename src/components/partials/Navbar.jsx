@@ -5,7 +5,7 @@ import { IoVolumeMuteSharp } from "react-icons/io5";
 import { VscUnmute } from "react-icons/vsc";
 function Navbar({ handlePlay, video }) {
   return (
-    <div className="navbar w-full h-[15vh] flex items-center justify-between z-10 px-6 relative">
+    <div className="navbar w-full h-[15vh] flex items-center justify-between z-[99999999999] px-6 relative">
       <div className="navbar-l flex items-center gap-20">
         <h1 className="font1 text-6xl tracking-wider">zentry</h1>
         <button className="hidden">products</button>
@@ -25,7 +25,7 @@ function Navbar({ handlePlay, video }) {
         </div>
         <button 
           onClick={handlePlay} 
-          className="bg-[#81e1e8] rounded-full p-2"
+          className="bg-[#81e1e8] rounded-full p-2 "
         >
           {video ? <IoVolumeMuteSharp/> : <VscUnmute/>}
         </button>

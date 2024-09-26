@@ -7,36 +7,43 @@ function Cards() {
   const [isSticky, setIsSticky] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isZoomed, setIsZoomed] = useState(false);
-  const moveSpeed = 0.05; // Reduced move speed for 3D effect
-  const tiltAngle = 3; // Reduced maximum tilt angle in degrees
+  const [isVisible, setIsVisible] = useState(false);
+  const [activeVideoIndex, setActiveVideoIndex] = useState(0);
+  const tiltAngle = 6; // Reduced maximum tilt angle in degrees
 
   useEffect(() => {
     const card = cardRef.current;
     const container = containerRef.current;
 
+    const handleMouseEnter = () => {
+      setIsVisible(true);
+    };
+
     const handleMouseMove = (e) => {
-      if (!isZoomed) {
+      if (!isZoomed && isVisible) {
         const rect = container.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+       
         setMousePosition({ x, y });
       }
     };
 
     const handleTouchMove = (e) => {
-      if (!isZoomed) {
+      if (!isZoomed && isVisible) {
         const touch = e.touches[0];
         const rect = container.getBoundingClientRect();
-        const x = touch.clientX - rect.left;
-        const y = touch.clientY - rect.top;
+        const x = touch.clientX - rect.left - rect.width / 2;
+        const y = touch.clientY - rect.top - rect.height / 2;
         setMousePosition({ x, y });
       }
     };
 
     const handleMouseLeave = () => {
+      setIsVisible(false);
       if (!isZoomed) {
         const rect = container.getBoundingClientRect();
-        setMousePosition({ x: rect.width / 2, y: rect.height / 2 });
+        setMousePosition({ x: 0, y: rect.height / 2 });
       }
     };
 
@@ -45,27 +52,28 @@ function Cards() {
       setIsSticky(rect.top <= 0);
     };
 
+    container.addEventListener('mouseenter', handleMouseEnter);
     container.addEventListener('mousemove', handleMouseMove);
     container.addEventListener('touchmove', handleTouchMove);
     container.addEventListener('mouseleave', handleMouseLeave);
     window.addEventListener('scroll', handleScroll);
 
     return () => {
+      container.removeEventListener('mouseenter', handleMouseEnter);
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('touchmove', handleTouchMove);
       container.removeEventListener('mouseleave', handleMouseLeave);
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [isZoomed]);
+  }, [isZoomed, isVisible]);
 
   useEffect(() => {
     const card = cardRef.current;
     const rect = card.getBoundingClientRect();
-    const centerX = rect.width / 2;
     const centerY = rect.height / 2;
     
-    if (!isZoomed) {
-      const moveX = (mousePosition.x - centerX) / centerX;
+    if (!isZoomed && isVisible) {
+      const moveX = mousePosition.x / (rect.width / 2);
       const moveY = (mousePosition.y - centerY) / centerY;
 
       requestAnimationFrame(() => {
@@ -74,12 +82,12 @@ function Cards() {
           perspective(1000px)
           rotateY(${moveX * tiltAngle}deg)
           rotateX(${-moveY * tiltAngle}deg)
-          translateZ(5px)
+          translateZ(0px)
         `;
 
         // Move videos
         videoRefs.current.forEach((video) => {
-          video.style.transform = `translate(${-moveX * 0.4}%, ${-moveY * 0.4}%)`;
+          video.style.transform = `translate(${-moveX * 0.4}px, ${-moveY * 0.4}px)`;
         });
       });
     } else {
@@ -88,14 +96,24 @@ function Cards() {
         video.style.transform = 'none';
       });
     }
-  }, [mousePosition, isZoomed]);
+  }, [mousePosition, isZoomed, isVisible]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveVideoIndex((prevIndex) => (prevIndex + 1) % 4);
+    }, 5000); // Change video every 5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
 
   const handleCardClick = () => {
     setIsZoomed(!isZoomed);
   };
 
   return (
-    <div className={`flex items-center justify-center h-full w-full sticky top-0 ${isZoomed ? 'fixed inset-0 z-50' : ''}`} ref={containerRef}>
+    <div className={`flex items-center ${
+      isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-50'
+              } justify-center h-full duration-1000 w-full sticky top-0 ${isZoomed ? 'fixed inset-0 z-50' : ''}`} ref={containerRef}>
       <div 
         className={`bg-white shadow-lg rounded-lg p-6 transform transition-all duration-300 relative overflow-hidden cursor-pointer ${
           isZoomed ? 'w-screen h-screen' : 'w-44 h-44'
@@ -105,12 +123,25 @@ function Cards() {
       >
         <div className={`absolute top-0 left-0 w-full h-full flex items-center justify-center bg-center overflow-hidden ${
           isZoomed ? 'scale-100' : 'scale-150'
-        }`}>
-          <video ref={(el) => videoRefs.current[0] = el} src="/public/imgs/hero-cut-1.mp4" className="w-[100vw] h-full absolute top-0 left-0 opacity-0 object-cover" loop muted playsInline ></video>
-          <video ref={(el) => videoRefs.current[1] = el} src="/public/imgs/hero-cut-2.mp4" className="w-[100vw] h-full absolute top-0 left-0 opacity-100 object-cover" loop muted playsInline ></video>
-          <video ref={(el) => videoRefs.current[2] = el} src="/public/imgs/hero-cut-3.mp4" className="w-[100vw] h-full absolute top-0 left-0 opacity-0 object-cover" loop muted playsInline ></video>
-          <video ref={(el) => videoRefs.current[3] = el} src="/public/imgs/hero-cut-4.mp4" className="w-[100vw] h-full absolute top-0 left-0 opacity-0 object-cover" loop muted playsInline ></video>
+        } ${isVisible ? 'scale-100' : 'scale-0'}`}>
+          {[1, 2, 3, 4].map((num, index) => (
+            <video 
+              key={num}
+              ref={(el) => videoRefs.current[index] = el} 
+              src={`/public/imgs/hero-cut-${num}.mp4`} 
+              className={`w-[100vw] h-full absolute top-0 left-0 object-cover transition-opacity duration-1000 `} 
+              loop 
+              muted 
+              playsInline 
+              autoPlay
+            ></video>
+          ))}
         </div>
+        {isZoomed && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <h1 className="text-4xl font-bold text-white z-10">Welcome to Our Site</h1>
+          </div>
+        )}
       </div>
     </div>
   );
