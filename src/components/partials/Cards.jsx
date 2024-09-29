@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 
-function Cards() {
+function Cards({ videos }) {
   const cardRef = useRef(null);
   const containerRef = useRef(null);
   const videoRefs = useRef([]);
@@ -10,28 +10,7 @@ function Cards() {
   const [isVisible, setIsVisible] = useState(false);
   const [activeVideoIndex, setActiveVideoIndex] = useState(0);
   const tiltAngle = 6; // Reduced maximum tilt angle in degrees
-  const videos = [
-    {
-      video: '/public/imgs/hero-cut-1.mp4',
-      title: 'Video 1',
-      description: 'Description 1',
-    },
-    {
-      video: '/public/imgs/hero-cut-2.mp4',
-      title: 'Video 2',
-      description: 'Description 2',
-    },
-    {
-      video: '/public/imgs/hero-cut-3.mp4',
-      title: 'Video 3',
-      description: 'Description 3',
-    },
-    {
-      video: '/public/imgs/hero-cut-4.mp4',
-      title: 'Video 4',
-      description: 'Description 4',
-    },
-  ];
+
 
   useEffect(() => {
     const container = containerRef.current;
@@ -128,7 +107,7 @@ function Cards() {
     }, 5000); // Change video every 5 seconds
 
     return () => clearInterval(interval);
-  }, []);
+  }, [videos]);
 
   const handleCardClick = () => {
     setIsZoomed(!isZoomed);
