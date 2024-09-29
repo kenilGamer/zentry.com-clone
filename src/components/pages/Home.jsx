@@ -10,15 +10,15 @@ import Cards from '../partials/Cards';
 
 function Home() {
   const videoRef = useRef(null);
-  const [video, setVideo] = useState(false); // video state, false means muted
+  const [video, setVideo] = useState(false); 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
   const handlePlay = () => {
     if (videoRef.current) {
-      videoRef.current.muted = !video; // If video is true, unmute; if false, mute
+      videoRef.current.muted = !video; 
       videoRef.current.play();
-      setVideo(!video); // Toggle the video state
+      setVideo(!video); 
     }
   };
 

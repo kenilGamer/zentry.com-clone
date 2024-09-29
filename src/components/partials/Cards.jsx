@@ -10,9 +10,30 @@ function Cards() {
   const [isVisible, setIsVisible] = useState(false);
   const [activeVideoIndex, setActiveVideoIndex] = useState(0);
   const tiltAngle = 6; // Reduced maximum tilt angle in degrees
+  const videos = [
+    {
+      video: '/public/imgs/hero-cut-1.mp4',
+      title: 'Video 1',
+      description: 'Description 1',
+    },
+    {
+      video: '/public/imgs/hero-cut-2.mp4',
+      title: 'Video 2',
+      description: 'Description 2',
+    },
+    {
+      video: '/public/imgs/hero-cut-3.mp4',
+      title: 'Video 3',
+      description: 'Description 3',
+    },
+    {
+      video: '/public/imgs/hero-cut-4.mp4',
+      title: 'Video 4',
+      description: 'Description 4',
+    },
+  ];
 
   useEffect(() => {
-    const card = cardRef.current;
     const container = containerRef.current;
 
     const handleMouseEnter = () => {
@@ -24,7 +45,6 @@ function Cards() {
         const rect = container.getBoundingClientRect();
         const x = e.clientX - rect.left - rect.width / 2;
         const y = e.clientY - rect.top - rect.height / 2;
-       
         setMousePosition({ x, y });
       }
     };
@@ -87,20 +107,24 @@ function Cards() {
 
         // Move videos
         videoRefs.current.forEach((video) => {
-          video.style.transform = `translate(${-moveX * 0.4}px, ${-moveY * 0.4}px)`;
+          if (video) {
+            video.style.transform = `translate(${-moveX * 0.4}px, ${-moveY * 0.4}px)`;
+          }
         });
       });
     } else {
       card.style.transform = 'none';
       videoRefs.current.forEach((video) => {
-        video.style.transform = 'none';
+        if (video) {
+          video.style.transform = 'none';
+        }
       });
     }
   }, [mousePosition, isZoomed, isVisible]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveVideoIndex((prevIndex) => (prevIndex + 1) % 4);
+      setActiveVideoIndex((prevIndex) => (prevIndex + 1) % videos.length);
     }, 5000); // Change video every 5 seconds
 
     return () => clearInterval(interval);
@@ -111,9 +135,12 @@ function Cards() {
   };
 
   return (
-    <div className={`flex items-center ${
-      isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-50'
-              } justify-center h-full duration-1000 w-full sticky top-0 ${isZoomed ? 'fixed inset-0 z-50' : ''}`} ref={containerRef}>
+    <div 
+      className={`flex items-center ${
+        isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-50'
+      } justify-center h-full duration-1000 w-full sticky top-0 ${isZoomed ? 'fixed inset-0 z-50' : ''}`} 
+      ref={containerRef}
+    >
       <div 
         className={`bg-white shadow-lg rounded-lg p-6 transform transition-all duration-300 relative overflow-hidden cursor-pointer ${
           isZoomed ? 'w-screen h-screen' : 'w-44 h-44'
@@ -121,15 +148,19 @@ function Cards() {
         ref={cardRef}
         onClick={handleCardClick}
       >
-        <div className={`absolute top-0 left-0 w-full h-full flex items-center justify-center bg-center overflow-hidden ${
-          isZoomed ? 'scale-100' : 'scale-150'
-        } ${isVisible ? 'scale-100' : 'scale-0'}`}>
-          {[1, 2, 3, 4].map((num, index) => (
+        <div 
+          className={`absolute top-0 left-0 w-full h-full flex items-center justify-center bg-center overflow-hidden ${
+            isZoomed ? 'scale-100' : 'scale-150'
+          } ${isVisible ? 'scale-100' : 'scale-0'}`}
+        >
+          {videos.map((video, index) => (
             <video 
-              key={num}
+              key={index}
               ref={(el) => videoRefs.current[index] = el} 
-              src={`/public/imgs/hero-cut-${num}.mp4`} 
-              className={`w-[100vw] h-full absolute top-0 left-0 object-cover transition-opacity duration-1000 `} 
+              src={video.video} 
+              className={`w-[100vw] h-full absolute top-0 left-0 object-cover transition-opacity duration-1000 ${
+                index === activeVideoIndex ? 'opacity-100' : 'opacity-0'
+              }`} 
               loop 
               muted 
               playsInline 

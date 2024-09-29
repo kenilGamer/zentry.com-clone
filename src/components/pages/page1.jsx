@@ -41,9 +41,7 @@ function Page1() {
           </button>
         </div>
       </div>
-      <div className="w-full h-full flex items-center justify-center absolute -top-20 z-[999999666] left-0">
-        {/* <Cards  /> */}
-      </div>
+
     </div>
   );
 }
