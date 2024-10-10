@@ -9,7 +9,7 @@ function Cards({ videos, currentCardIndex, onCardClick }) {
   const cardRef = useRef(null);
   const videoTextureRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [activeCardIndex, setActiveCardIndex] = useState(0);
+  const [activeCardIndex, setActiveCardIndex] = useState(currentCardIndex);
 
   const initThreeJS = useCallback(() => {
     const scene = new THREE.Scene();
@@ -67,7 +67,7 @@ function Cards({ videos, currentCardIndex, onCardClick }) {
 
       cardRef.current.material.opacity = 1;
     }
-  }, [videos, activeCardIndex]);
+  }, [activeCardIndex]);
 
   const handleResize = useCallback(() => {
     if (cameraRef.current && rendererRef.current) {
@@ -101,9 +101,9 @@ function Cards({ videos, currentCardIndex, onCardClick }) {
 
   return (
     <div 
-      className={`absolute  ${
-        isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-      } justify-center h-full duration-300 w-full overflow-hidden`}
+      className={`absolute top-0 left-0 overflow-hidden ${
+        isVisible ? '' : 'opacity-0 scale-95'
+      } justify-center h-[90vh] duration-300 `}
       ref={containerRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}

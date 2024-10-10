@@ -32,57 +32,46 @@ function Home() {
     dispatch(fetchUser());
   }, [dispatch]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentVideoIndex((prevIndex) => {
-        const nextIndex = (prevIndex + 1) % videos.length;
-        setNextCardIndex((nextIndex + 1) % videos.length);
-        return nextIndex;
-      });
-    }, 10000); // Change video and card every 10 seconds
-
-    return () => clearInterval(interval);
-  }, []);
-
   const handleSignOut = useCallback(() => {
     signOut();
   }, []);
 
-  const videos = [
+  const videos = useRef([
     {
       video: '/public/imgs/hero-cut-1.mp4',
-      title: 'Video 1',
-      description: 'Description 1',
+      title: 'gaming',
+      description: '',
     },
     {
       video: '/public/imgs/hero-cut-2.mp4',
-      title: 'Video 2',
-      description: 'Description 2',
+      title: 'indntity',
+      description: 'Discover new opportunities',
     },
     {
       video: '/public/imgs/hero-cut-3.mp4',
-      title: 'Video 3',
-      description: 'Description 3',
+      title: 'reality',
+      description: 'Interact with our community',
     },
     {
       video: '/public/imgs/hero-cut-4.mp4',
-      title: 'Video 4',
-      description: 'Description 4',
-    },
-  ];
+      title: 'lifestyle',
+      description: 'Join our community',
+    }
+   
+  ]);
 
   const handleCardClick = useCallback((index) => {
     setCurrentVideoIndex(index);
-    setNextCardIndex((index + 1) % videos.length);
+    setNextCardIndex((index + 1) % videos.current.length);
     if (videoRef.current) {
-      videoRef.current.src = videos[index].video;
+      videoRef.current.src = videos.current[index].video;
       videoRef.current.play();
     }
   }, [videos]);
 
   return (
     <div className='w-full overflow-hidden text-white'>
-      <Bgvideo videoRef={videoRef} videos={videos} currentVideoIndex={currentVideoIndex} />
+      <Bgvideo videoRef={videoRef} videos={videos.current} currentVideoIndex={currentVideoIndex} />
       <Navbar handlePlay={handlePlay} video={video} user={user} onSignOut={handleSignOut} />
       <AnimatePresence mode="wait">
         <motion.div 
@@ -94,14 +83,14 @@ function Home() {
           transition={{ duration: 0.5 }}
         >
           <Cards 
-            videos={videos} 
+            videos={videos.current} 
             currentCardIndex={nextCardIndex} 
             onCardClick={handleCardClick}
           />
         </motion.div>
       </AnimatePresence>
-      <Page1 />
-      <Page2 />
+      <Page1 descriptions={videos.current.map(video => video.title)} currentVideoIndex={currentVideoIndex} />
+      {/* <Page2  /> */}
     </div>
   );
 }

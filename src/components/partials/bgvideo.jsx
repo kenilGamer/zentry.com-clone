@@ -12,7 +12,7 @@ function Bgvideo({ videoRef, videos }) {
   }, [videos]);
 
   return (
-    <div className='w-full absolute h-[115vh] left-0 z-0'>
+    <div className='w-full absolute h-[100vh] left-0 z-0'>
       {videos.map((video, index) => (
         <video
           key={index}
@@ -21,7 +21,7 @@ function Bgvideo({ videoRef, videos }) {
             index === currentVideoIndex ? 'opacity-100' : 'opacity-0'
           }`}
           loop
-          playsInline
+
           muted
           autoPlay
         >
