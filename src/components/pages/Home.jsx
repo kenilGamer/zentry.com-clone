@@ -20,14 +20,13 @@ function Home() {
   const handlePlay = useCallback(() => {
     if (videoRef.current) {
       videoRef.current.muted = !video; 
-      videoRef.current.play();
-      setVideo(!video); 
+      videoRef.current.play().then(() => setVideo(!video)).catch(error => console.error("Error playing video:", error));
     }
   }, [video]);
 
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.play();
+      videoRef.current.play().then(() => setVideo(true)).catch(error => console.error("Error playing video:", error));
     }
     dispatch(fetchUser());
   }, [dispatch]);
@@ -65,7 +64,8 @@ function Home() {
     setNextCardIndex((index + 1) % videos.current.length);
     if (videoRef.current) {
       videoRef.current.src = videos.current[index].video;
-      videoRef.current.play();
+      videoRef.current.load();
+      videoRef.current.play().then(() => setVideo(true)).catch(error => console.error("Error playing video:", error));
     }
   }, [videos]);
 
@@ -76,7 +76,7 @@ function Home() {
       <AnimatePresence mode="wait">
         <motion.div 
           key={nextCardIndex}
-          className="w-full h-full flex items-center justify-center absolute top-0 z-[96] left-0 overflow-hidden"
+          className="w-full h-full  absolute z-[96] top-0 overflow-hidden"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 1.2 }}
@@ -89,7 +89,7 @@ function Home() {
           />
         </motion.div>
       </AnimatePresence>
-      <Page1 descriptions={videos.current.map(video => video.title)} currentVideoIndex={currentVideoIndex} />
+      <Page1 className="z-[98]" descriptions={videos.current.map(video => video.title)} currentVideoIndex={currentVideoIndex} />
       {/* <Page2  /> */}
     </div>
   );

@@ -25,7 +25,7 @@ function Cards({ videos, currentCardIndex, onCardClick }) {
     containerRef.current?.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
-    const geometry = new THREE.PlaneGeometry(3, 2);
+    const geometry = new THREE.PlaneGeometry(2.7, 2.7);
     const videoTexture = new THREE.VideoTexture(document.createElement('video'));
     videoTexture.minFilter = THREE.LinearFilter;
     videoTexture.magFilter = THREE.LinearFilter;
@@ -89,9 +89,9 @@ function Cards({ videos, currentCardIndex, onCardClick }) {
     if (cardRef.current) {
       const mouseX = (e.clientX / window.innerWidth) * 2 - 1;
       const mouseY = (e.clientY / window.innerHeight) * 2 - 1;
-
-      cardRef.current.rotation.y = mouseX * 0.3;
-      cardRef.current.rotation.x = mouseY * 0.3;
+     
+      cardRef.current.rotation.y = mouseX * 0.5;
+      cardRef.current.rotation.x = mouseY * 0.5;
     }
   }, []);
 
@@ -101,9 +101,9 @@ function Cards({ videos, currentCardIndex, onCardClick }) {
 
   return (
     <div 
-      className={`absolute top-0 left-0 overflow-hidden ${
+      className={`absolute top-0 left-0 ${
         isVisible ? '' : 'opacity-0 scale-95'
-      } justify-center h-[90vh] duration-300 `}
+      } justify-center h-[90vh] duration-1000`}
       ref={containerRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
