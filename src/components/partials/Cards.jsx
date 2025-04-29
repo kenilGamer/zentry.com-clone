@@ -25,7 +25,7 @@ function Cards({ videos, currentCardIndex, onCardClick }) {
     containerRef.current?.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
-    const geometry = new THREE.PlaneGeometry(2.7, 2.7);
+    const geometry = new THREE.PlaneGeometry(2.7, 2.7,4);
     const videoTexture = new THREE.VideoTexture(document.createElement('video'));
     videoTexture.minFilter = THREE.LinearFilter;
     videoTexture.magFilter = THREE.LinearFilter;
