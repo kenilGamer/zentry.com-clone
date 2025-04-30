@@ -21,9 +21,8 @@ function Bgvideo({ videoRef, videos }) {
             index === currentVideoIndex ? 'opacity-100' : 'opacity-0'
           }`}
           loop
-
-          muted
-          autoPlay
+          playsInline
+          preload="auto"
         >
           <source src={video.video} type="video/mp4" />
         </video>
