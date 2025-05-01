@@ -37,7 +37,7 @@ function App() {
 
   return (
     <Provider store={store}>
-      <div className=" overflow-hidden">
+      <div className="overflow-hidden">
         <Home />
       </div>
     </Provider>

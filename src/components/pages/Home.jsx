@@ -70,7 +70,7 @@ function Home() {
   }, [videos]);
 
   return (
-    <div className='w-full overflow-hidden text-white'>
+    <div className='w-full overflow-hidden text-white relative '>
       <Bgvideo videoRef={videoRef} videos={videos.current} currentVideoIndex={currentVideoIndex} />
       <Navbar handlePlay={handlePlay} video={video} user={user} onSignOut={handleSignOut} />
       <AnimatePresence mode="wait">
