@@ -1,6 +1,5 @@
 import React from "react";
 import { FaLocationArrow } from "react-icons/fa6";
-import Cards from "../partials/Cards";
 import { motion } from 'framer-motion';
 
 function Page1({ descriptions, currentVideoIndex }) {
